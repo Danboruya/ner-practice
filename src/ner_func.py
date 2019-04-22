@@ -7,6 +7,7 @@ def extract_ne(src_str, knp, fstring_flag=False, detail_flag=False):
     tagged_str = src_str
     result = _knp.parse(src_str)
     ne_phrase_list = []
+    ne_dict = {}
 
     if fstring_flag:
         for t in result.tag_list():
@@ -27,8 +28,9 @@ def extract_ne(src_str, knp, fstring_flag=False, detail_flag=False):
 
             tagged_str = tagged_str.replace(ne_phrase, tagged_ne_phrase)
             ne_phrase_list.append(ne_phrase)
+            ne_dict[ne_phrase] = tagged_ne_phrase
 
-    return [tagged_str, src_str, ne_phrase_list]
+    return [tagged_str, src_str, ne_phrase_list, ne_dict]
 
 
 def swap_ne_tag_with_only_tag(src_str, target_tag, tag):
@@ -65,3 +67,4 @@ def tester_2():
     tagged_test1 = extract_ne(test1, knp, detail_flag=False)
     print(swap_ne_tag_with_ne_and_tag(tagged_test[0], "ノーベル物理学賞", "PRIZE", tagged_test[2]))
     print(swap_ne_tag_with_ne_and_tag(tagged_test1[0], "教科書", "EDUCATION", tagged_test1[2]))
+    print(tagged_test[3])
